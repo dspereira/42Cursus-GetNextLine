@@ -6,7 +6,7 @@
 /*   By: diogo <diogo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:02:59 by diogo             #+#    #+#             */
-/*   Updated: 2021/11/11 11:11:10 by diogo            ###   ########.fr       */
+/*   Updated: 2021/11/11 11:39:01 by diogo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 // headers para tirar
 #include <stdio.h>
-#include <fcntl.h>
 
 /*
-return: > 0  numero de bytes lidos
-		= 0  fim do ficheiro
-	    < 0  erro na leitura
+return: > 0  number of bytes read
+		= 0  end of file
+	    < 0  error
 */
 int get_char(int fd, char *c)
 {
@@ -32,19 +31,29 @@ int get_char(int fd, char *c)
 	return (status);
 }
 
-char *get_line(int fd)
+char *get_line(int fd, int buff_size)
 {
 	int status;
 	char c;
+	char *str;
+	int i;
 	
-	status = get_char(fd, &c);
-	printf("%c", c);
-	while (status > 0 && c != '\n')
+	str = malloc(buff_size * sizeof(char));
+	if (!str)
+		return (0);
+	i = 0;
+	while (get_char(fd, &c) > 0 && c != '\n' && i < buff_size)
 	{
-		status = get_char(fd, &c); 
-		printf("%c", c);
+		str[i] = c;
+		i++;
 	}
-	return (0);
+	if (c == '\n')
+	{
+		str[i] = '\n';
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 
 char	*get_next_line(int fd)
@@ -52,8 +61,9 @@ char	*get_next_line(int fd)
 	int buff;
 	char *str;
 
+	buff = 100;
 	if (fd < 0)
 		return (0);
-	str = get_line(fd);
+	str = get_line(fd, buff);
 	return (str); 
 }

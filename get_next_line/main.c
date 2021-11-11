@@ -14,7 +14,8 @@ int main (void)
         return (0);
     }
     str = get_next_line(fd);
+    printf("%s", str);
     free(str);    
     close(fd);
-    return 0;
+    return (0);
 }
