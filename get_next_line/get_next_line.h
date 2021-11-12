@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogo <diogo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:05:12 by diogo             #+#    #+#             */
-/*   Updated: 2021/11/11 11:14:17 by diogo            ###   ########.fr       */
+/*   Updated: 2021/11/12 15:37:58 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 #include <unistd.h>
 
 char	*get_next_line(int fd);
+int get_char(const char *s, int c);
 
 #endif
