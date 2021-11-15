@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diogo <diogo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:02:59 by diogo             #+#    #+#             */
-/*   Updated: 2021/11/12 17:12:01 by dsilveri         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:26:52 by diogo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int get_line(int fd, char **str)
 	int status;
 	int index;
 
-	s = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	s = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!s)
 		return (0);
 	status = 1;
@@ -35,19 +35,42 @@ int get_line(int fd, char **str)
 	{
 		status = read(fd, s, BUFFER_SIZE);
 		index = get_char(s, '\n');
-		printf("\nstring: |%s|", s);
+		if (index < 0)
+			*str = line_cat(*str, s, BUFFER_SIZE);
+		else{
+			*str = line_cat(*str, s, index);
+			printf("\nBUFFER_SIZE: %i  index: %i", BUFFER_SIZE, index);
+		}
 	}
-
-	printf("\n index: %i\n status: %i\n", index, status);
-	
-	*str = s;
+	free(s);
 	return (status);
 }
 
-char *str_concat(char *dst, char *src, int n)
+char *line_cat(char *s1, char *s2, int n)
 {
-	
-} 
+	int i;
+	int s1_len;
+	char *str;
+
+	if (!s1)
+		s1_len = 0;
+	else 
+		s1_len = ft_strlen(s1);
+	str = malloc(s1_len + n + 1 + sizeof(char));
+	if (s1_len > 0)
+	{
+		ft_strlcpy(str, s1, s1_len + 1);
+		free(s1);
+	}
+	i = 0;
+	while (i < n && s2[i] != '\0')
+	{
+		str[s1_len + i] = s2[i];
+		i++;
+	}
+	str[s1_len + i] = '\0';
+	return (str);
+}
 
 void set_storage()
 {
@@ -65,6 +88,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0)
 		return (0);
+	str = 0;
 	get_line(fd, &str);
 	return (str); 
 }
