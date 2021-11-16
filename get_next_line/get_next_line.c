@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diogo <diogo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dsilveri <dsilveri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:02:59 by diogo             #+#    #+#             */
-/*   Updated: 2021/11/15 19:26:52 by diogo            ###   ########.fr       */
+/*   Updated: 2021/11/16 15:33:49 by dsilveri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-#define BUFFER_SIZE 4
+#define BUFFER_SIZE 20
 
 /*
 return: > 0  number of bytes read
@@ -22,64 +22,75 @@ return: > 0  number of bytes read
 */
 int get_line(int fd, char **str)
 {
-	char *s;
+	char *buff;
 	int status;
 	int index;
+	static char *storage;
 
-	s = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!s)
+	storage = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buff)
 		return (0);
 	status = 1;
 	index = -1;
 	while(status > 0 && index < 0)
 	{
-		status = read(fd, s, BUFFER_SIZE);
-		index = get_char(s, '\n');
-		if (index < 0)
-			*str = line_cat(*str, s, BUFFER_SIZE);
-		else{
-			*str = line_cat(*str, s, index);
-			printf("\nBUFFER_SIZE: %i  index: %i", BUFFER_SIZE, index);
+		status = read(fd, buff, BUFFER_SIZE);
+		if (status > 0)
+			buff[status] = '\0';
+		index = get_char(buff, '\n');
+		if (status > 0 && index < 0)
+			*str = line_cat(*str, buff, status);
+		else if (index > 0)
+		{
+			*str = line_cat(*str, buff, index + 1);
+			storage = set_storage(storage, &buff[index + 1]);
 		}
+		printf("\nstorage: |%s|", storage);
+			
+		// passar tudo a zero para na proxima leitura do file trazer quebra de linha	
 	}
-	free(s);
+	free(buff);
 	return (status);
 }
 
-char *line_cat(char *s1, char *s2, int n)
+char *line_cat(char *line, char *buff, int n)
 {
 	int i;
-	int s1_len;
-	char *str;
+	int line_len;
+	char *new_line;
 
-	if (!s1)
-		s1_len = 0;
+	if (!line)
+		line_len = 0;
 	else 
-		s1_len = ft_strlen(s1);
-	str = malloc(s1_len + n + 1 + sizeof(char));
-	if (s1_len > 0)
+		line_len = ft_strlen(line);
+	new_line = malloc(line_len + n + 1 + sizeof(char));
+	if (line_len > 0)
 	{
-		ft_strlcpy(str, s1, s1_len + 1);
-		free(s1);
+		ft_strlcpy(new_line, line, line_len + 1);
+		free(line);
 	}
 	i = 0;
-	while (i < n && s2[i] != '\0')
+	while (i < n && buff[i] != '\0')
 	{
-		str[s1_len + i] = s2[i];
+		new_line[line_len + i] = buff[i];
 		i++;
 	}
-	str[s1_len + i] = '\0';
-	return (str);
+	new_line[line_len + i] = '\0';
+	return (new_line);
 }
 
-void set_storage()
+char *set_storage(char *storage, char *src)
 {
+	int i;
 
-}
-
-void get_storage()
-{
-	
+	i = 0;
+	while (src[i] != '\0')
+	{
+		storage[i] = src[i];
+		i++;
+	}
+	return (storage);
 }
 
 char	*get_next_line(int fd)
