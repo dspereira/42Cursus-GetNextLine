@@ -6,17 +6,18 @@
 /*   By: diogo <diogo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 10:04:42 by diogo             #+#    #+#             */
-/*   Updated: 2021/11/18 14:22:17 by diogo            ###   ########.fr       */
+/*   Updated: 2021/11/18 16:25:51 by diogo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*
-	return: index of caracter
-			-1 if dont exists caracter 
+	return: 
+			>= 0 index of character
+			= -1 character not found
 */
-int get_char(const char *s, int c)
+int	get_char(const char *s, int c)
 {
 	int	i;
 
@@ -69,14 +70,4 @@ void	ft_bzero(void *s, size_t n)
 		((char *)s)[i] = 0;
 		i++;
 	}
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (ptr)
-		ft_bzero(ptr, count * size);
-	return (ptr);
 }
