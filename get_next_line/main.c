@@ -14,7 +14,12 @@ int main (void)
         return (0);
     }
     str = get_next_line(fd);
-    printf("\nstring final: |%s|", str);
+    printf("%s", str);
+    while (str)
+    {
+        str = get_next_line(fd);
+        printf("%s", str);
+    }
     free(str);    
     close(fd);
     return (0);
