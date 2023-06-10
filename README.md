@@ -12,13 +12,44 @@ By implementing the `get_next_line` and `get_next_line_bonus` functions, this pr
 
 ## Installation / Usage
 
-This simple example works on linux and MacOs
+This simple example works on linux and MacOs. It is recommended to utilize a Makefile to facilitate the compilation process for all the files.
 
 Clone repo inside the folder of your project:
 ```shell
-git clone https://github.com/dspereira/42Cursus-GetNextLine.git get_next_line
+git clone https://github.com/dspereira/42Cursus-GetNextLine.git gnl
 ```
+Usage:
+```C
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include "gnl/get_next_line/get_next_line.h"
 
+int main(void)
+{
+    int fd;
+    char *line;
+
+    fd = open("path_to_your_file", O_RDONLY);
+    if (fd < 0)
+        return (0);
+    while (line = get_next_line(fd))
+    {
+        printf(line);
+        free(line);
+    }
+    close(fd);
+    return (0);
+}
+```
+build:
+```shell
+gcc main.c gnl/get_next_line/get_next_line.c gnl/get_next_line/get_next_line_utils.c -D BUFFER_SIZE=42 -o example
+```
+run:
+```shell
+./example
+```
 
 ## License
 
