@@ -42,11 +42,11 @@ int main(void)
     return (0);
 }
 ```
-build:
+Build:
 ```shell
 gcc main.c gnl/get_next_line/get_next_line.c gnl/get_next_line/get_next_line_utils.c -D BUFFER_SIZE=42 -o example
 ```
-run:
+Run:
 ```shell
 ./example
 ```
