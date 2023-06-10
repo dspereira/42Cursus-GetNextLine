@@ -10,6 +10,16 @@ Additionally, this project provides an improved version called `get_next_line_bo
 
 By implementing the `get_next_line` and `get_next_line_bonus` functions, this project offers a reliable and efficient solution for reading lines from file descriptors in C programs.
 
+## Installation / Usage
+
+This simple example works on linux and MacOs
+
+Clone repo inside the folder of your project:
+```shell
+git clone https://github.com/dspereira/42Cursus-GetNextLine.git get_next_line
+```
+
+
 ## License
 
 This project is licensed under the MIT License.
