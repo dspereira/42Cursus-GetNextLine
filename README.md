@@ -2,7 +2,7 @@
 
 This project is part of the 42Lisboa curriculum and aims to implement the `get_next_line` function in C. The `get_next_line` function reads one line at a time from a specified file descriptor, which is passed as a parameter and returns a pointer to the line that is dynamically allocated in heap memory.
 
-To enhance performance, this function utilizes an internal buffer. The size of the buffer is determined during the compilation phase by passing a flag. The buffer size can significantly impact performance by reducing the number of I/O file reads.
+To enhance performance, this function utilizes an internal buffer. The size of the buffer is determined during the compilation phase by passing a flag. The buffer size can significantly impact performance by reducing the number of I/O operations.
 
 To read the entire content of a file, you can repeatedly call the `get_next_line` function until it returns a NULL pointer. As the lines are stored in heap memory using the `malloc` system call, it is good practice to free the line after it is no longer needed.
 
