@@ -18,7 +18,7 @@ Clone repo inside the folder of your project:
 ```shell
 git clone https://github.com/dspereira/42Cursus-GetNextLine.git gnl
 ```
-Usage:
+Usage Example:
 ```C
 #include <stdio.h>
 #include <fcntl.h>
