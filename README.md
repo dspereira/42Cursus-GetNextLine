@@ -8,7 +8,7 @@ To read the entire content of a file, you can repeatedly call the `get_next_line
 
 Additionally, this project provides an improved version called `get_next_line_bonus`. This version allows reading from multiple file descriptors, with a maximum limit of 1024. It enables reading lines from different file descriptors without mixing their respective line information.
 
-By implementing the `get_next_line` and `get_next_line_bonus` functions, this project offers a reliable and efficient solution for reading lines from file descriptors in C programs.
+The `get_next_line` offers a reliable and efficient solution for reading lines from file descriptors in C programs.
 
 ## Installation / Usage
 
